@@ -2,6 +2,7 @@
   "name": "accounting-understood",
   "version": "1.0.0",
   "private": true,
+  "packageManager": "pnpm@12.4.2",
   "type": "module",
   "description": "JSON-driven first-year UK accounting study companion",
   "scripts": {

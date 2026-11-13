@@ -6,10 +6,10 @@ Open the **gm-finance** folder as the project root. There are no runtime depende
 
 ## Run locally
 
-With Node.js 22.12+:
+With Node.js 22.12+ and pnpm 12.4.2 (pinned in `package.json`):
 
 ```sh
-npm start
+pnpm start
 ```
 
 Open `http://127.0.0.1:4173`. Alternatively, any static web server can serve this folder. End the server with Ctrl+C.
@@ -17,18 +17,18 @@ Open `http://127.0.0.1:4173`. Alternatively, any static web server can serve thi
 Development checks:
 
 ```sh
-npm ci
-npm test
-npx playwright install chromium
-npm run build
-npm run test:browser
+pnpm install --frozen-lockfile
+pnpm test
+pnpm exec playwright install chromium
+pnpm build
+pnpm test:browser
 ```
 
-Linux browser hosts may need `npx playwright install --with-deps chromium`. The browser tests use the built `dist/` site at a repository-style `/gm-finance/` URL. Test tooling is development-only; it is not shipped with the site.
+Linux browser hosts may need `pnpm exec playwright install --with-deps chromium`. The browser tests use the built `dist/` site at a repository-style `/gm-finance/` URL. Test tooling is development-only; it is not shipped with the site.
 
 ## Publish to GitHub Pages
 
-1. Create a GitHub repository and upload/push the contents of **this folder**, including `.github/`, `package-lock.json`, `assets/` and `data/`. Do not upload the private lecture DOCX or progress backups. The four linked fundamentals PDFs in `assets/pdfs/` will be publicly accessible: ensure you have permission to redistribute them before publishing.
+1. Create a GitHub repository and upload/push the contents of **this folder**, including `.github/`, `pnpm-lock.yaml`, `assets/` and `data/`. Do not upload the private lecture DOCX or progress backups. The four linked fundamentals PDFs in `assets/pdfs/` will be publicly accessible: ensure you have permission to redistribute them before publishing.
 2. Keep the default branch named `main`, or update `.github/workflows/pages.yml` to your branch.
 3. In repository **Settings → Pages**, set **Source** to **GitHub Actions**.
 4. Push to `main` or run **Publish study space** from Actions. The workflow validates content, builds `dist/` and publishes only static site files. The deployment displays the live URL.
@@ -115,6 +115,6 @@ Edit `data/fundamentals.json` (selected by `course.json` → `fundamentalsFile`)
    - `ledgers`: a signed debit-positive `opening` balance and rows of dated Dr/Cr movements. Correct running balances are derived, not duplicated in config.
    - `trialBalances`: closing balances with `amount` and `side: "dr" | "cr"`. The configured totals must agree.
    - `exams`: original scenario, suggested minutes, marks and parts with prompts, marks and indicative solutions. The part marks must add up.
-6. Run `npm test` and preview. The app also validates JSON at startup and reports configuration errors rather than silently dropping content. No HTML is accepted in lesson strings: text is escaped on display.
+6. Run `pnpm test` and preview. The app also validates JSON at startup and reports configuration errors rather than silently dropping content. No HTML is accepted in lesson strings: text is escaped on display.
 
 Update the exercises and their tests together when correcting a numerical answer. Use independent workings rather than simply copying an answer into a test. Keep monetary values to no more than two decimal places. Update the reading pointers only after checking the relevant edition.
