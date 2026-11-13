@@ -7,6 +7,7 @@
     { "id": "unit-3", "title": "Putting it into the right period", "subtitle": "Unit 3 · Adjustments & valuation", "file": "unit-3.json" }
   ],
   "activitiesFile": "activities.json",
+  "fundamentalsFile": "fundamentals.json",
   "book": {
     "title": "Frank Wood's Business Accounting",
     "edition": "16th edition (2025)",

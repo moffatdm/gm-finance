@@ -232,8 +232,37 @@ test('small phones and intermediate widths do not overflow the page', async ({pa
   }
 });
 
+test('Fudamentals opens four ordered subpages with working PDF links', async ({page}) => {
+  await page.getByRole('link',{name:'Fudamentals',exact:true}).click();
+  await expect(page.getByRole('heading',{name:'Fudamentals',exact:true})).toBeVisible();
+  await expect(page.locator('.module-card h2')).toHaveText(['Debits & Credits','Account Types','The Ledger','Financial Statements']);
+  const config = await read('fundamentals.json');
+  for (const foundation of config.pages) {
+    await page.goto(`./#fundamentals/${foundation.id}`);
+    await expect(page.getByRole('heading',{name:foundation.title,exact:true})).toBeVisible();
+    await expect(page.locator('[data-nav="fundamentals"]')).toHaveAttribute('aria-current','page');
+    const pdf = page.getByRole('link',{name:`Open PDF: ${foundation.order}. ${foundation.title}`});
+    await expect(pdf).toHaveAttribute('target','_blank');
+    const response = await page.request.get(await pdf.getAttribute('href'));
+    expect(response.status()).toBe(200);
+    expect(response.headers()['content-type']).toBe('application/pdf');
+    expect((await response.body()).subarray(0,5).toString()).toBe('%PDF-');
+    await page.getByRole('button',{name:"I'm new to accounting",exact:true}).click();
+    await expect(page.locator('.new-explanation')).toHaveCount(foundation.sections.length);
+    await page.getByRole('button',{name:'Step by step',exact:true}).click();
+    await expect(page.locator('.new-explanation')).toHaveCount(0);
+  }
+  await page.goto('./#fundamentals/debits-credits');
+  await page.locator('.foundation-pagination').getByRole('link',{name:'2. Account Types'}).click();
+  await expect(page).toHaveURL(/#fundamentals\/account-types$/);
+  await page.reload();
+  await expect(page.getByRole('heading',{name:'Account Types',exact:true})).toBeVisible();
+  await page.goto('./#fundamentals/missing');
+  await expect(page.getByRole('heading',{name:'That page isn’t here.'})).toBeVisible();
+});
+
 test('mobile layout, keyboard access and WCAG automated checks cover key screens', async ({page}, testInfo) => {
-  for (const hash of ['home','learn','lesson/prepayments','quiz/equation','journal/j-loan','ledger/l-overdraft','trial/tb-adjusted','exam/ex-timing','progress','guide']) {
+  for (const hash of ['home','fundamentals','fundamentals/account-types','learn','lesson/prepayments','quiz/equation','journal/j-loan','ledger/l-overdraft','trial/tb-adjusted','exam/ex-timing','progress','guide']) {
     await page.goto(`./#${hash}`);
     await expect(page.locator('h1')).toBeVisible();
     const overflow = await page.evaluate(()=>document.documentElement.scrollWidth > window.innerWidth+1);

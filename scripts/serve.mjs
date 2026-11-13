@@ -8,7 +8,7 @@ const option = (name, fallback) => args.includes(name) ? args[args.indexOf(name)
 const root = resolve(fileURLToPath(new URL('../', import.meta.url)), option('--dir', '.'));
 const port = Number(option('--port', process.env.PORT || 4173));
 const base = option('--base', '').replace(/\/$/, '');
-const mime = { '.html':'text/html; charset=utf-8', '.js':'text/javascript; charset=utf-8', '.css':'text/css; charset=utf-8', '.json':'application/json; charset=utf-8', '.svg':'image/svg+xml' };
+const mime = { '.html':'text/html; charset=utf-8', '.js':'text/javascript; charset=utf-8', '.css':'text/css; charset=utf-8', '.json':'application/json; charset=utf-8', '.svg':'image/svg+xml', '.pdf':'application/pdf' };
 const server = http.createServer(async (req, res) => {
   try {
     const path = decodeURIComponent(new URL(req.url, 'http://localhost').pathname);

@@ -3,9 +3,10 @@ import {
   dueQuestions, moduleStats, confidenceScore, ledgerBalances, parseAmount,
   checkJournal, validateCourse, validateProgress
 } from './engine.js';
+import { validateFundamentals, fundamentalsIndex, fundamentalsPage } from './fundamentals.js';
 
 const main = document.querySelector('#main');
-let course, units, modules, questions, activities, progress;
+let course, units, modules, questions, activities, progress, fundamentals;
 let canSave = true;
 let unitFilter = 'all';
 let practiceDraft = null;
@@ -38,11 +39,13 @@ async function loadJson(path) {
 async function boot() {
   try {
     course = await loadJson('data/course.json');
-    [units, activities] = await Promise.all([
+    [units, activities, fundamentals] = await Promise.all([
       Promise.all(course.units.map(unit => loadJson(`data/${unit.file}`))),
-      loadJson(`data/${course.activitiesFile}`)
+      loadJson(`data/${course.activitiesFile}`),
+      loadJson(`data/${course.fundamentalsFile}`)
     ]);
     validateCourse(course, units, activities);
+    validateFundamentals(fundamentals);
     modules = units.flatMap(unit => unit.modules.map(module => ({ ...module, unitId: unit.id })));
     questions = modules.flatMap(module => module.questions.map(q => ({ ...q, moduleId: module.id, unitId: module.unitId })));
     progress = freshProgress();
@@ -357,6 +360,9 @@ function render(focus = false) {
   let html;
   switch (page) {
     case 'home': html = homePage(); break;
+    case 'fundamentals':
+      html = id ? fundamentalsPage(fundamentals, id, modes(), progress.mode === 'new') || notFound() : fundamentalsIndex(fundamentals);
+      break;
     case 'learn': html = learnPage(); break;
     case 'unit':
       if (!course.units.some(u => u.id === id)) { html = notFound(); break; }

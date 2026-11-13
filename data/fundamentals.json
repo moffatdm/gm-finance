@@ -1,0 +1,245 @@
+{
+  "title": "Fudamentals",
+  "description": "Four foundations to explore in order, before or alongside your Unit 2 and 3 lessons.",
+  "sourceNote": "Original topic guides informed by the four supplied DoubleEntry PDFs, credited to Dr Michael Guo (2025). These are not copies of the copyrighted PDFs. Examples and wording here are independently written, with UK terminology and links to the existing lessons and practice.",
+  "pages": [
+    {
+      "id": "debits-credits",
+      "order": 1,
+      "title": "Debits & Credits",
+      "sourceTitle": "1 Debits & Credits _ Double Entry.pdf",
+      "pdf": "assets/pdfs/1-debits-credits.pdf",
+      "summary": "Understand the two sides of a transaction and use the accounting equation to keep them balanced.",
+      "sections": [
+        {
+          "title": "Every transaction has another side",
+          "text": "Double entry records each transaction in at least two accounts, with equal total debits and credits. Assets = liabilities + equity must still hold afterwards. Receiving a loan increases both bank and a liability; buying equipment from bank increases one asset and decreases another.",
+          "new": "Ask two questions: what changed, and what is the other side of that change? Money appearing in the bank might be a sale, a loan or owner funding. The second account explains the difference."
+        },
+        {
+          "title": "Debit is left; credit is right",
+          "text": "The words describe account sides, not universally money in and money out. Assets and expenses increase with debits. Liabilities, equity and income increase with credits. Reverse the side for a decrease. Total debits must equal total credits even if a journal has three or more lines.",
+          "new": "First name the account type, then decide whether it grows or shrinks. Only then choose Dr or Cr. Avoid treating 'debit what comes in' as a universal rule for every account type."
+        },
+        {
+          "title": "Read a T-account",
+          "text": "A T-account places debits on the left and credits on the right. For Bank, £900 on the debit side and £250 on the credit side leave a £650 debit balance, assuming no opening balance. A running-balance ledger gives the same answer in a different layout.",
+          "new": "Draw a big T and write the account name above it. Add each side separately. The difference is the balance; the bigger side gives its Dr or Cr label."
+        },
+        {
+          "title": "Balanced does not always mean correct",
+          "text": "Equal totals help detect some errors but do not prove the right accounts were chosen. Equipment wrongly debited to rent can still balance against a credit to bank. Check the meaning of the entry as well as its arithmetic.",
+          "new": "A wrong answer can be tidy. Check that the debit names what the business really received or used, and that the credit describes the other effect."
+        }
+      ],
+      "table": {
+        "caption": "The normal effect of debits and credits",
+        "headers": ["Account type", "Increase", "Decrease", "Normal balance"],
+        "rows": [
+          ["Asset", "Dr", "Cr", "Dr"],
+          ["Expense", "Dr", "Cr", "Dr"],
+          ["Liability", "Cr", "Dr", "Cr"],
+          ["Equity", "Cr", "Dr", "Cr"],
+          ["Income", "Cr", "Dr", "Cr"]
+        ]
+      },
+      "example": {
+        "prompt": "A business buys equipment for £720 using bank funds. There is no VAT.",
+        "steps": [
+          "Equipment is an asset and increases: Dr Equipment cost £720.",
+          "Bank is an asset and decreases: Cr Bank £720.",
+          "Total debits £720 equal total credits £720. Total assets are unchanged because one asset replaces another."
+        ],
+        "result": "Name the accounts, identify their changes, choose the sides, then check the totals."
+      },
+      "links": [
+        { "label": "The accounting equation", "route": "lesson/equation" },
+        { "label": "Debits & credits lesson and questions", "route": "lesson/double-entry" },
+        { "label": "Try a capital journal", "route": "journal/j-owner" }
+      ]
+    },
+    {
+      "id": "account-types",
+      "order": 2,
+      "title": "Account Types",
+      "sourceTitle": "2 Account Types _ Double Entry.pdf",
+      "pdf": "assets/pdfs/2-account-types.pdf",
+      "summary": "Classify accounts, understand what carries forward and become comfortable with UK accounting terms.",
+      "sections": [
+        {
+          "title": "Resources, obligations and the owner's interest",
+          "text": "Assets are resources controlled by the business, such as equipment, inventory, bank funds and trade receivables. Liabilities are obligations, including trade payables, loans and income received in advance. Equity is the residual interest: assets less liabilities. Capital and retained earnings are equity, not revenue.",
+          "new": "Sort things into three boxes: what the business controls, what it owes, and the owners' remaining interest. A customer debt goes in the first box; a supplier debt goes in the second."
+        },
+        {
+          "title": "Income and expenses explain performance",
+          "text": "Sales, service income and interest income increase profit and hence equity. Rent, wages, cost of sales and depreciation expense reduce profit. Owner contributions and distributions change equity directly, rather than through profit. Dividends and drawings are not operating expenses.",
+          "new": "Keep 'how the business performed' separate from 'what its owners put in or took out'. Borrowing and owner funding can increase bank without earning any profit."
+        },
+        {
+          "title": "Be careful with an expanded equation",
+          "text": "Assets = liabilities + equity already includes current profit if equity has been updated. To show the year's movements separately, use assets = liabilities + opening equity + contributions − distributions + income − expenses, assuming no other equity movements. Do not add profit again to equity that already includes it.",
+          "new": "Profit belongs inside equity eventually. You may show it separately while building the accounts, but never count the same profit twice."
+        },
+        {
+          "title": "Permanent and temporary accounts",
+          "text": "Asset, liability and equity balances normally carry forward into the next period. Income and expense accounts are closed into the period's profit or loss. Drawings or dividend distribution accounts may also be closed into equity, but do not appear as expenses in the income statement.",
+          "new": "The next year starts with the resources and obligations still there. It starts a fresh record of that year's income and expenses."
+        },
+        {
+          "title": "The chart of accounts is an organised directory",
+          "text": "A chart of accounts gives names and often numeric codes to accounts. A business might put assets in a 1000 range, liabilities in 2000 and income in 4000, but these ranges are illustrative, not a universal UK requirement. Use the organisation's actual chart and keep names consistent.",
+          "new": "Account codes are like shelf labels. They help you find the right account, but different businesses can label their shelves differently."
+        }
+      ],
+      "table": {
+        "caption": "Useful UK terminology",
+        "headers": ["Term", "Meaning"],
+        "rows": [
+          ["Trade receivables", "Amounts owed by customers for credit sales; an asset."],
+          ["Trade payables", "Amounts owed to suppliers; a liability."],
+          ["Prepayments", "Paid-for benefits not yet used; normally a current asset."],
+          ["Ordinary shares", "A class of company ownership shares."],
+          ["Preference shares", "Shares with specified preferential rights. Accounting classification depends on their terms; they are not always equity."],
+          ["Share premium", "Amounts subscribed for shares above their nominal value."],
+          ["Debentures", "Debt instruments issued by a company."],
+          ["Retained earnings / retained profits", "Cumulative profits kept after distributions and other relevant movements."]
+        ]
+      },
+      "example": {
+        "prompt": "Start with assets £2,000, liabilities £500 and equity £1,500. Earn and receive service income £400, then pay rent £100.",
+        "steps": [
+          "Service income: Dr Bank £400; Cr Service income £400.",
+          "Rent: Dr Rent expense £100; Cr Bank £100.",
+          "Profit is £300 and assets rise to £2,300. Closing equity is £1,800.",
+          "Check: assets £2,300 = liabilities £500 + equity £1,800. Do not add the £300 profit to closing equity again."
+        ],
+        "result": "Account types explain both the correct entry and how the transaction affects performance or position."
+      },
+      "links": [
+        { "label": "Capital, loans & investments", "route": "lesson/funding" },
+        { "label": "Drawings, dividends & grants", "route": "lesson/transfers" },
+        { "label": "Classify balances in a trial balance", "route": "trial/tb-start" }
+      ]
+    },
+    {
+      "id": "the-ledger",
+      "order": 3,
+      "title": "The Ledger",
+      "sourceTitle": "3 The Ledger _ Double Entry.pdf",
+      "pdf": "assets/pdfs/3-the-ledger.pdf",
+      "summary": "Follow a transaction from journal to ledger, trial balance and financial statements.",
+      "sections": [
+        {
+          "title": "One account, one organised story",
+          "text": "A ledger groups entries by account. The general ledger contains the main account balances. Detailed subsidiary records support balances such as trade receivables and trade payables. The sales ledger tracks individual credit customers; the purchase ledger tracks individual suppliers. A cash book records receipts and payments.",
+          "new": "A journal tells you what happened on a date. A ledger brings together everything that happened to one account, so you can see what it now contains."
+        },
+        {
+          "title": "Journalising and posting are separate steps",
+          "text": "Journalising records the transaction's debit and credit entries in chronological order. Posting transfers each line to its named ledger account with the same amount and side. Dates, descriptions and references make the two records traceable.",
+          "new": "Write the complete two-sided transaction first. Then put each line into the correct account's own record. Posting must not change a debit into a credit."
+        },
+        {
+          "title": "Move through the accounting cycle",
+          "text": "Identify the transaction, record its journal, post to the ledgers and calculate closing balances. Extract a trial balance, make relevant period-end adjustments and prepare financial statements from the adjusted records. Computerised systems automate many steps but still depend on correct inputs.",
+          "new": "Think of a route: event → entry → account balances → check → adjustments → reports. Software can carry out the route quickly, but it cannot make a wrongly classified transaction right."
+        },
+        {
+          "title": "The trial balance lists balances, not movements",
+          "text": "Each ledger's closing balance goes into one trial balance column, Dr or Cr. An asset normally has a debit balance, but an overdrawn bank has a credit balance. Agreement of total debits and credits does not catch a complete omission or every wrong-account entry.",
+          "new": "Finish each account's story before taking its final number to the trial balance. Do not copy all its receipts or payments instead of the closing balance."
+        }
+      ],
+      "table": {
+        "caption": "Where different records help",
+        "headers": ["Record", "Main job"],
+        "rows": [
+          ["Journal", "Records the full debit/credit transaction by date."],
+          ["General ledger", "Collects posted entries by account."],
+          ["Sales ledger", "Tracks amounts owed by individual credit customers."],
+          ["Purchase ledger", "Tracks amounts owed to individual suppliers."],
+          ["Trial balance", "Lists ledger closing balances to check debit/credit totals."]
+        ]
+      },
+      "example": {
+        "prompt": "A new business receives £1,000 owner capital and then buys equipment for £300 from bank. There are no other entries.",
+        "steps": [
+          "Capital journal: Dr Bank £1,000; Cr Capital £1,000.",
+          "Equipment journal: Dr Equipment cost £300; Cr Bank £300.",
+          "Post both Bank lines. Closing Bank = £1,000 − £300 = £700 Dr.",
+          "Equipment closes at £300 Dr and Capital at £1,000 Cr.",
+          "Trial balance debits £700 + £300 = £1,000; credits £1,000."
+        ],
+        "result": "The bank's £700 closing balance belongs in the trial balance, not its £1,000 debit movement."
+      },
+      "links": [
+        { "label": "Ledgers, trial balances & presentation", "route": "lesson/records" },
+        { "label": "Try the bank running-balance simulation", "route": "ledger/l-bank" },
+        { "label": "Follow a supplier's ledger", "route": "ledger/l-payables" },
+        { "label": "Build a trial balance", "route": "trial/tb-start" }
+      ]
+    },
+    {
+      "id": "financial-statements",
+      "order": 4,
+      "title": "Financial Statements",
+      "sourceTitle": "4 Financial Statements _ Double Entry.pdf",
+      "pdf": "assets/pdfs/4-financial-statements.pdf",
+      "summary": "Distinguish profit, financial position and cash flow, and see how the reports connect.",
+      "sections": [
+        {
+          "title": "Three different questions",
+          "text": "The income statement reports performance over a period. The statement of financial position reports assets, liabilities and equity at a date. The statement of cash flows explains cash movements over a period. These are three key reports, not the entire set of financial statements: applicable reporting requirements can also include changes in equity and explanatory notes.",
+          "new": "Ask: did we earn a profit, what do we have and owe now, and where did the cash go? One report cannot answer all three questions."
+        },
+        {
+          "title": "Read the income statement in stages",
+          "text": "For a trader, sales less cost of sales gives gross profit. Deduct operating expenses, including depreciation, to reach operating profit in a simple presentation. Finance costs and tax may follow. Expenses belong to the period they relate to, not necessarily when paid. Dividends paid are not expenses.",
+          "new": "Gross profit is only the first subtotal. Rent, wages and other running costs still have to be deducted before reaching the final profit."
+        },
+        {
+          "title": "Read the statement of financial position at a date",
+          "text": "Show resources and obligations outstanding at the reporting date. Inventory, trade receivables and prepayments are normally current assets; equipment is a non-current asset. Present its cost less accumulated depreciation as carrying amount. Trade payables and accruals are normally current liabilities. Classify the current portion of a loan separately where required.",
+          "new": "This is a snapshot, not a year's list of payments. An unpaid customer, unused insurance and equipment still have value in the snapshot even though they are not cash."
+        },
+        {
+          "title": "Profit and cash flow are not the same",
+          "text": "A credit sale can earn revenue without receiving cash yet. Depreciation reduces profit without a current cash payment. Loan proceeds bring cash in without creating revenue. Cash flow is commonly grouped into operating, investing and financing activities; classifications for some items depend on the applicable rules.",
+          "new": "Profit records what was earned and consumed. Cash flow records money moving. That is why a profitable business can still need cash to pay its bills."
+        },
+        {
+          "title": "Connect the reports and notes",
+          "text": "Profit retained in the business increases equity; distributions reduce it. Closing cash reconciles to the relevant statement of financial position amount, with the appropriate cash-equivalent and overdraft treatment. Notes explain policies and break down totals such as inventory and non-current asset movements.",
+          "new": "The reports tell connected stories. Use reconciliations to check the links rather than expecting every headline number to be identical."
+        }
+      ],
+      "table": {
+        "caption": "Which report answers which question?",
+        "headers": ["Report", "Focus", "Timing"],
+        "rows": [
+          ["Income statement (profit and loss)", "Income, expenses and profit", "For a period"],
+          ["Statement of financial position (balance sheet)", "Assets, liabilities and equity", "At a date"],
+          ["Statement of cash flows", "Cash inflows and outflows", "For a period"]
+        ]
+      },
+      "example": {
+        "prompt": "Start a business with £2,000 capital in bank. Buy equipment for £600 cash. Earn £900 service income on credit, receive £500 of it and pay rent £200. Record £100 depreciation. Ignore tax and VAT.",
+        "steps": [
+          "Income statement: £900 service income − £200 rent − £100 depreciation = £600 profit.",
+          "Bank: £2,000 − £600 + £500 − £200 = £1,700. Customers still owe £400.",
+          "Equipment carrying amount: £600 cost − £100 accumulated depreciation = £500.",
+          "SoFP assets: Bank £1,700 + receivables £400 + equipment £500 = £2,600. No liabilities. Equity: capital £2,000 + retained profit £600 = £2,600.",
+          "Cash movements: operating receipts less rent £300; equipment investing outflow £600; capital financing inflow £2,000. Net increase in cash £1,700."
+        ],
+        "result": "Profit is £600; operating cash inflow is £300. Both figures are correct because they measure different things."
+      },
+      "links": [
+        { "label": "Inventory, cost of sales & gross profit", "route": "lesson/trading" },
+        { "label": "Depreciation & carrying amounts", "route": "lesson/depreciation" },
+        { "label": "Pulling it together: statement notes", "route": "lesson/notes" },
+        { "label": "Try a records-to-profit scenario", "route": "exam/ex-trader" }
+      ]
+    }
+  ]
+}

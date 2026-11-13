@@ -28,7 +28,7 @@ Linux browser hosts may need `npx playwright install --with-deps chromium`. The 
 
 ## Publish to GitHub Pages
 
-1. Create a GitHub repository and upload/push the contents of **this folder**, including `.github/`, `package-lock.json`, `assets/` and `data/`. Do not upload the private lecture DOCX or progress backups.
+1. Create a GitHub repository and upload/push the contents of **this folder**, including `.github/`, `package-lock.json`, `assets/` and `data/`. Do not upload the private lecture DOCX or progress backups. The four linked fundamentals PDFs in `assets/pdfs/` will be publicly accessible: ensure you have permission to redistribute them before publishing.
 2. Keep the default branch named `main`, or update `.github/workflows/pages.yml` to your branch.
 3. In repository **Settings → Pages**, set **Source** to **GitHub Actions**.
 4. Push to `main` or run **Publish study space** from Actions. The workflow validates content, builds `dist/` and publishes only static site files. The deployment displays the live URL.
@@ -62,6 +62,14 @@ Frank Wood references were checked against [Pearson's table of contents for *Fra
 The guide in the site explains corrections to lecture shorthand: dividends paid are equity distributions, LIFO is not permitted under IAS 2/FRS 102, and equal interest allocation is only a stated classroom simplification. Grant questions explicitly assume deferral and release against related costs. Units 2–3 are included; Unit 4 had only a heading.
 
 ## Add or edit a unit without changing JavaScript
+
+### Fundamentals pages
+
+The **Fudamentals** menu (spelling as requested) opens four original topic guides in numerical order: Debits & Credits, Account Types, The Ledger, and Financial Statements. Each has an **Open PDF** link to its unmodified original attachment, previous/next navigation, a new worked example and related existing exercises. Beginner mode adds plain-language explanations. These reference pages do not change module-completion or quiz scores.
+
+Edit `data/fundamentals.json` (selected by `course.json` → `fundamentalsFile`) to add or change pages. Give each page a unique `id`, positive unique `order`, title/summary/sourceTitle, relative `pdf` path under `assets/pdfs/`, sections with `text` and `new`, a table, worked example and related lesson/activity links. The index and previous/next links sort by `order`, regardless of file order. PDF copyright notices are preserved; the original explanations are not transcriptions. All four attached PDFs are bundled, so their relative links work at GitHub Pages repository URLs. Remove any files you are not authorised to distribute before public deployment.
+
+### Learning units
 
 1. Copy the structure of `data/unit-2.json` into a new JSON file in `data/`.
 2. Add `{ "id": "unit-4", "title": "...", "subtitle": "Unit 4 · ...", "file": "unit-4.json" }` to `data/course.json` → `units`. Update the course subtitle and source description.
