@@ -1,0 +1,26 @@
+{
+  "id": "glasgow-accounting-companion",
+  "title": "Financial Accounting",
+  "subtitle": "Year 1 · Units 2 & 3",
+  "units": [
+    { "id": "unit-2", "title": "The building blocks", "subtitle": "Unit 2 · Recording & reporting", "file": "unit-2.json" },
+    { "id": "unit-3", "title": "Putting it into the right period", "subtitle": "Unit 3 · Adjustments & valuation", "file": "unit-3.json" }
+  ],
+  "activitiesFile": "activities.json",
+  "book": {
+    "title": "Frank Wood's Business Accounting",
+    "edition": "16th edition (2025)",
+    "isbn": "9781292727783",
+    "url": "https://www.pearson.com/en-gb/subject-catalog/p/frank-woods-business-accounting/P200000010734/9781292741697",
+    "note": "Chapter numbers below were checked against Pearson's 16th-edition contents. Check the title and edition of your copy: other Frank Wood titles and editions use different chapter numbers. Topic labels still help you use the index. These are reading pointers, not reproductions of the book."
+  },
+  "source": "Adapted into original explanations and exercises from the supplied digitised Unit 2 and Unit 3 lecture notes. Unit 4 was a heading only and is not included.",
+  "scope": "A first-year UK accounting companion, not an official University of Glasgow resource. Original exam-style questions rehearse the supplied topics; they are not past papers, predictions or an official marking scheme. Follow your lecturer's stated policies and assessment requirements. No VAT unless an exercise explicitly says otherwise; all amounts are GBP.",
+  "clarifications": [
+    "Dividends paid to shareholders are distributions of equity, not an income statement expense. Interest on a loan is an expense. Drawings are owner withdrawals, not expenses.",
+    "LIFO is explained because it appears in the notes, but is not permitted under IAS 2 or FRS 102. Use FIFO or weighted average where applicable.",
+    "The loan notes' final entry describes a repayment, not receipt of a new loan. Equal allocation of total interest is used only when an exercise explicitly assumes it; real amortised-cost loans generally use the effective interest method.",
+    "A purchases account is used for goods bought for resale under the periodic inventory system in these introductory exercises. Buying equipment or paying rent does not go into purchases.",
+    "Grant income recognition depends on applicable standards and grant conditions. The grant exercises explicitly assume systematic release as the related costs arise. Receiving cash alone does not always create revenue."
+  ]
+}
