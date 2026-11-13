@@ -39,6 +39,18 @@ No domain or root URL is hard-coded. Asset/data URLs are relative and navigation
 
 This checkout has no configured GitHub remote. No repository has been created and nothing has been published by building these files.
 
+## Crawlers and search indexing
+
+The HTML includes `noindex, nofollow, noarchive, nosnippet, noimageindex` robot directives. `robots.txt` requests that all crawlers avoid all paths, and is included in both the root site and the built deployment.
+
+**These are requests to compliant bots, not access control.** Public GitHub Pages cannot prevent arbitrary crawlers from fetching the site, JSON or PDFs. Direct PDF/JSON URLs do not inherit the HTML meta directive. GitHub Pages does not support configuring response headers such as `X-Robots-Tag` through this repository.
+
+Robots rules only apply from the **origin root**: `https://OWNER.github.io/robots.txt` or `https://your-domain/robots.txt`. A project site's `https://OWNER.github.io/REPO/robots.txt` is not authoritative. For a project site, put the rules at the origin root (for example in the `OWNER.github.io` repository). If other projects should remain crawlable, use `Disallow: /REPO/` there instead of blocking the entire origin. A dedicated domain serving this site at `/` makes its bundled robots file authoritative.
+
+`noindex` can only be read when the crawler fetches the HTML. Blocking crawling can leave a previously discovered URL listed without a snippet; it does not guarantee removal of existing search results or cached copies. Use the relevant search engine's removal tools if needed.
+
+If preventing **all unauthorised access**, including bots, is required, do not publish on public GitHub Pages. Use hosting with server-side authentication/access controls, protect every asset as well as HTML, and keep the source repository private. A client-side password or checking a bot's user-agent is not sufficient.
+
 ## Learning and saved progress
 
 - **Step by step:** all questions in a module, including applied ones.
