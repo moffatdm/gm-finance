@@ -270,9 +270,11 @@ test('account reference covers exercise accounts, explains the narrative and pre
   const names = [...config.groups.flatMap(g => g.accounts), ...config.specialAccounts].map(a => a.name);
   await expect(page.locator('.account-name')).toHaveText(names);
   expect([...activities.accounts, 'Bank (overdraft)'].every(name => names.includes(name))).toBe(true);
+  await page.getByRole('tab',{name:'Account categories',exact:true}).click();
   await page.getByRole('button',{name:'Liabilities',exact:true}).click();
   await expect(page.locator('#account-group-liabilities')).toBeFocused();
   await expect(page.locator('#account-group-liabilities')).toContainText('Accruals');
+  await page.getByRole('tab',{name:'Overview',exact:true}).click();
   await expect(page.locator('#narrative-example').locator('..')).toContainText('no Bank entry');
   await page.reload();
   await expect(page.getByRole('heading',{name:'Which account do I choose?',exact:true})).toBeVisible();
@@ -289,7 +291,7 @@ test('account reference covers exercise accounts, explains the narrative and pre
 });
 
 test('mobile layout, keyboard access and WCAG automated checks cover key screens', async ({page}, testInfo) => {
-  for (const hash of ['home','accounts','fundamentals','fundamentals/account-types','learn','lesson/prepayments','quiz/equation','journal/j-loan','ledger/l-overdraft','trial/tb-adjusted','exam/ex-timing','progress','guide']) {
+  for (const hash of ['home','accounts','accounts/categories','accounts/quiz','fundamentals','fundamentals/account-types','learn','lesson/prepayments','quiz/equation','journal/j-loan','ledger/l-overdraft','trial/tb-adjusted','exam/ex-timing','progress','guide']) {
     await page.goto(`./#${hash}`);
     await expect(page.locator('h1')).toBeVisible();
     const overflow = await page.evaluate(()=>document.documentElement.scrollWidth > window.innerWidth+1);

@@ -3,7 +3,7 @@ export const DAY = 86_400_000;
 export const MODES = ['standard', 'new', 'challenge'];
 
 export function freshProgress() {
-  return { version: 1, mode: 'standard', read: [], answers: {}, practice: {}, drafts: {}, activeQuiz: null };
+  return { version: 1, mode: 'standard', read: [], answers: {}, practice: {}, drafts: {}, activeQuiz: null, accountQuiz: { index: 0, responses: {} } };
 }
 
 export function pounds(amount) {
@@ -146,7 +146,7 @@ export function validateCourse(course, units, activities) {
   }
 }
 
-export function validateProgress(input, modules, activities) {
+export function validateProgress(input, modules, activities, accountQuizConfig) {
   const invalid = () => { throw new Error('This is not a valid version 1 progress backup. Existing progress has not been replaced.'); };
   const isObject = value => value !== null && typeof value === 'object' && !Array.isArray(value);
   if (!isObject(input) || input.version !== 1 || !MODES.includes(input.mode) || !Array.isArray(input.read) || !isObject(input.answers) || !isObject(input.practice) || !isObject(input.drafts)) invalid();
@@ -154,6 +154,20 @@ export function validateProgress(input, modules, activities) {
   const moduleIds = new Set(modules.map(m => m.id));
   const activityIds = new Set(['journals', 'ledgers', 'trialBalances'].flatMap(type => activities[type].map(a => a.id)));
   const progress = freshProgress();
+  if (input.accountQuiz !== undefined) {
+    const quiz = input.accountQuiz;
+    if (!isObject(quiz) || !Number.isSafeInteger(quiz.index) || quiz.index < 0 || !isObject(quiz.responses)) invalid();
+    const known = accountQuizConfig?.stages.flatMap(stage => stage.questions);
+    if (known && quiz.index > known.length) invalid();
+    const responses = {};
+    for (const [id, response] of Object.entries(quiz.responses)) {
+      if (!/^[a-z0-9-]+$/.test(id) || !isObject(response) || typeof response.hint !== 'boolean' || !(response.selected === null || (Number.isInteger(response.selected) && response.selected >= 0 && response.selected <= 3))) invalid();
+      if (known && !known.some(q => q.id === id)) invalid();
+      responses[id] = { hint: response.hint, selected: response.selected };
+    }
+    if (known && known.slice(0, quiz.index).some(q => responses[q.id]?.selected == null)) invalid();
+    progress.accountQuiz = { index: quiz.index, responses };
+  }
   progress.mode = input.mode;
   if (input.read.some(id => typeof id !== 'string')) invalid();
   progress.read = [...new Set(input.read.filter(id => moduleIds.has(id)))];

@@ -5,9 +5,10 @@ import {
 } from './engine.js';
 import { validateFundamentals, fundamentalsIndex, fundamentalsPage } from './fundamentals.js';
 import { validateAccountReference, accountReferencePage } from './account-reference.js';
+import { validateAccountQuiz, accountQuizQuestions, accountQuizMarkup, stageUnlocked } from './account-quiz.js';
 
 const main = document.querySelector('#main');
-let course, units, modules, questions, activities, progress, fundamentals, accountReference;
+let course, units, modules, questions, activities, progress, fundamentals, accountReference, accountQuizConfig;
 let canSave = true;
 let unitFilter = 'all';
 let practiceDraft = null;
@@ -40,21 +41,23 @@ async function loadJson(path) {
 async function boot() {
   try {
     course = await loadJson('data/course.json');
-    [units, activities, fundamentals, accountReference] = await Promise.all([
+    [units, activities, fundamentals, accountReference, accountQuizConfig] = await Promise.all([
       Promise.all(course.units.map(unit => loadJson(`data/${unit.file}`))),
       loadJson(`data/${course.activitiesFile}`),
       loadJson(`data/${course.fundamentalsFile}`),
-      loadJson(`data/${course.accountReferenceFile}`)
+      loadJson(`data/${course.accountReferenceFile}`),
+      loadJson(`data/${course.accountQuizFile}`)
     ]);
     validateCourse(course, units, activities);
     validateFundamentals(fundamentals);
     validateAccountReference(accountReference, activities);
+    validateAccountQuiz(accountQuizConfig);
     modules = units.flatMap(unit => unit.modules.map(module => ({ ...module, unitId: unit.id })));
     questions = modules.flatMap(module => module.questions.map(q => ({ ...q, moduleId: module.id, unitId: module.unitId })));
     progress = freshProgress();
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) progress = validateProgress(JSON.parse(saved), modules, activities);
+      if (saved) progress = validateProgress(JSON.parse(saved), modules, activities, accountQuizConfig);
       localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
     } catch {
       canSave = false;
@@ -67,6 +70,7 @@ async function boot() {
     document.addEventListener('click', onClick);
     document.addEventListener('change', onChange);
     document.addEventListener('input', onInput);
+    document.addEventListener('keydown', onAccountTabKey);
     window.addEventListener('storage', event => {
       if (event.key === STORAGE_KEY || event.key === null) {
         canSave = false;
@@ -364,7 +368,11 @@ function render(focus = false) {
   let html;
   switch (page) {
     case 'home': html = homePage(); break;
-    case 'accounts': html = accountReferencePage(accountReference); break;
+    case 'accounts':
+      html = !id || ['overview', 'categories', 'quiz'].includes(id)
+        ? accountReferencePage(accountReference, id || 'overview', accountQuizMarkup(accountQuizConfig, progress.accountQuiz))
+        : notFound();
+      break;
     case 'fundamentals':
       html = id ? fundamentalsPage(fundamentals, id, modes(), progress.mode === 'new') || notFound() : fundamentalsIndex(fundamentals);
       break;
@@ -414,7 +422,30 @@ function checkedActivity(correct, message, activity) {
   showActivityFeedback({ correct, message, detail: correct ? activity.explanation : '' });
 }
 
+function activateAccountTab(tab) {
+  if (!['overview', 'categories', 'quiz'].includes(tab)) return;
+  history.pushState(null, '', `#accounts/${tab}`);
+  render();
+  document.getElementById(`account-tab-${tab}`).focus({ preventScroll: true });
+}
+
+function onAccountTabKey(event) {
+  const tab = event.target.closest('[data-account-tab]');
+  if (!tab || !['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+  event.preventDefault();
+  const tabs = ['overview', 'categories', 'quiz'];
+  const index = tabs.indexOf(tab.dataset.accountTab);
+  const next = event.key === 'Home' ? 0 : event.key === 'End' ? tabs.length - 1
+    : (index + (event.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length;
+  activateAccountTab(tabs[next]);
+}
+
 function onClick(event) {
+  const accountTab = event.target.closest('[data-account-tab]');
+  if (accountTab) {
+    activateAccountTab(accountTab.dataset.accountTab);
+    return;
+  }
   const accountSection = event.target.closest('[data-account-section]');
   if (accountSection) {
     const section = document.getElementById(`account-group-${accountSection.dataset.accountSection}`);
@@ -430,6 +461,28 @@ function onClick(event) {
   const button = event.target.closest('[data-action]');
   if (!button || button.disabled) return;
   const action = button.dataset.action;
+  if (action.startsWith('account-') && route()[0] === 'accounts') {
+    const state = progress.accountQuiz;
+    const pool = accountQuizQuestions(accountQuizConfig);
+    const question = pool[state.index];
+    if (action === 'account-stage') {
+      const stage = Number(button.dataset.stage);
+      if (!Number.isInteger(stage) || stage < 0 || stage >= accountQuizConfig.stages.length || !stageUnlocked(accountQuizConfig, state, stage)) return;
+      const list = accountQuizConfig.stages[stage].questions;
+      const firstUnanswered = list.find(q => state.responses[q.id]?.selected == null) || list[0];
+      state.index = pool.indexOf(firstUnanswered);
+    } else if (question) {
+      const response = state.responses[question.id] ||= { selected: null, hint: false };
+      if (action === 'account-hint' && response.selected === null) response.hint = true;
+      if (action === 'account-answer' && response.selected === null) response.selected = Number(button.dataset.choice);
+      if (action === 'account-next' && response.selected !== null) state.index++;
+      if (action === 'account-previous' && state.index > 0) state.index--;
+    }
+    save();
+    document.querySelector('#account-quiz-slot').innerHTML = accountQuizMarkup(accountQuizConfig, state);
+    document.getElementById(action === 'account-answer' ? 'account-answer-feedback' : 'account-question-heading')?.focus({ preventScroll: true });
+    return;
+  }
   if (action === 'mode') {
     progress.mode = button.dataset.mode; save(); render(); return;
   }
@@ -554,7 +607,7 @@ async function importBackup(file) {
   const feedback = document.querySelector('#backup-feedback');
   try {
     if (file.size > 2_000_000) throw new Error('That file is too large. Choose a progress JSON backup smaller than 2 MB.');
-    const restored = validateProgress(JSON.parse(await file.text()), modules, activities);
+    const restored = validateProgress(JSON.parse(await file.text()), modules, activities, accountQuizConfig);
     const confirmed = await confirmDialog('Replace saved progress?', 'This will replace this browser’s course progress and written answers with the backup. Export your current work first if you need it.', 'Replace progress');
     if (!confirmed) { feedback.textContent = 'Import cancelled. Your progress is unchanged.'; return; }
     restored.activeQuiz = null;
