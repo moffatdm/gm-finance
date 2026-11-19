@@ -450,7 +450,10 @@ function onClick(event) {
   if (accountSection) {
     const section = document.getElementById(`account-group-${accountSection.dataset.accountSection}`);
     section?.focus({ preventScroll: true });
-    section?.scrollIntoView({ block: 'start' });
+    if (section) {
+      section.scrollIntoView({ block: 'start' });
+      window.scrollBy(0, -accountSection.closest('.account-category-guide').offsetHeight);
+    }
     return;
   }
   if (event.target.closest('.skip-link')) {

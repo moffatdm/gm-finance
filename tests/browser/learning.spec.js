@@ -274,6 +274,16 @@ test('account reference covers exercise accounts, explains the narrative and pre
   await page.getByRole('button',{name:'Liabilities',exact:true}).click();
   await expect(page.locator('#account-group-liabilities')).toBeFocused();
   await expect(page.locator('#account-group-liabilities')).toContainText('Accruals');
+  const guide = page.locator('.account-category-guide');
+  const firstPosition = await guide.boundingBox();
+  await page.evaluate(() => window.scrollBy(0, 400));
+  const scrolledPosition = await guide.boundingBox();
+  expect(Math.abs(scrolledPosition.y - firstPosition.y)).toBeLessThan(2);
+  await page.getByRole('button',{name:'Expenses',exact:true}).click();
+  const heading = await page.locator('#heading-expenses').boundingBox();
+  const sticky = await guide.boundingBox();
+  expect(heading.y).toBeGreaterThanOrEqual(sticky.y + sticky.height);
+  await expect(page.locator('#account-group-expenses')).toBeFocused();
   await page.getByRole('tab',{name:'Overview',exact:true}).click();
   await expect(page.locator('#narrative-example').locator('..')).toContainText('no Bank entry');
   await page.reload();

@@ -9,6 +9,10 @@
 .account-reference-table td{line-height:1.6}
 .account-reference-table td:last-child{white-space:nowrap}
 .account-aliases{display:block;font-size:.73rem;font-weight:400;color:var(--muted);margin-top:7px;line-height:1.6}
+.account-category-guide{position:sticky;top:0;z-index:2;background:var(--paper);border-bottom:1px solid var(--line);padding:8px 0}
+.account-category-guide p{margin:0 0 8px;max-height:max(2.8em,calc(45vh - 80px));overflow-y:auto}
+.account-category-guide .button-row{flex-wrap:nowrap;overflow-x:auto;margin:0;padding:5px;align-items:stretch}
+.account-category-guide .button-row button{white-space:nowrap;flex-shrink:0}
 .reference-tabs{display:flex;gap:6px;border-bottom:1px solid var(--line);margin:24px 0}
 .reference-tabs [role=tab]{flex:1;background:transparent;border-bottom:3px solid transparent;padding:14px 10px;color:var(--muted);font-weight:600;font-size:.85rem}
 .reference-tabs [aria-selected=true]{border-bottom-color:var(--green);color:var(--green);background:var(--mint);border-radius:8px 8px 0 0}
