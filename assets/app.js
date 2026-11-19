@@ -4,9 +4,10 @@ import {
   checkJournal, validateCourse, validateProgress
 } from './engine.js';
 import { validateFundamentals, fundamentalsIndex, fundamentalsPage } from './fundamentals.js';
+import { validateAccountReference, accountReferencePage } from './account-reference.js';
 
 const main = document.querySelector('#main');
-let course, units, modules, questions, activities, progress, fundamentals;
+let course, units, modules, questions, activities, progress, fundamentals, accountReference;
 let canSave = true;
 let unitFilter = 'all';
 let practiceDraft = null;
@@ -39,13 +40,15 @@ async function loadJson(path) {
 async function boot() {
   try {
     course = await loadJson('data/course.json');
-    [units, activities, fundamentals] = await Promise.all([
+    [units, activities, fundamentals, accountReference] = await Promise.all([
       Promise.all(course.units.map(unit => loadJson(`data/${unit.file}`))),
       loadJson(`data/${course.activitiesFile}`),
-      loadJson(`data/${course.fundamentalsFile}`)
+      loadJson(`data/${course.fundamentalsFile}`),
+      loadJson(`data/${course.accountReferenceFile}`)
     ]);
     validateCourse(course, units, activities);
     validateFundamentals(fundamentals);
+    validateAccountReference(accountReference, activities);
     modules = units.flatMap(unit => unit.modules.map(module => ({ ...module, unitId: unit.id })));
     questions = modules.flatMap(module => module.questions.map(q => ({ ...q, moduleId: module.id, unitId: module.unitId })));
     progress = freshProgress();
@@ -270,6 +273,7 @@ function journalPage(id) {
   const draft = getDraft('journal', activity, { lines: [{ account: '', side: 'dr', amount: '' }, { account: '', side: 'cr', amount: '' }] });
   return `${pageHead('JOURNAL BUILDER', 'Two sides. One story.', 'Work out what changed, then choose the accounts and sides. Line order does not matter.')}
     ${activitySelect('journal', activities.journals, id)}<section class="card"><span class="eyebrow">${e(activity.title)}</span><p>${e(activity.prompt)}</p>
+    <a class="text-link" href="#accounts" target="_blank" rel="noopener noreferrer">Which account do I choose? Open the account reference (new tab) ↗</a>
     <div class="journal-lines">${draft.lines.map((line, i) => `<div class="journal-line">
       <div class="field"><label for="account-${i}">Account · line ${i + 1}</label><select id="account-${i}" data-line="${i}" data-field="account"><option value="">Choose account</option>${activities.accounts.map(a => `<option ${a === line.account ? 'selected' : ''}>${e(a)}</option>`).join('')}</select></div>
       <div class="field"><label for="side-${i}">Side</label><select id="side-${i}" data-line="${i}" data-field="side"><option value="dr" ${line.side === 'dr' ? 'selected' : ''}>Debit (Dr)</option><option value="cr" ${line.side === 'cr' ? 'selected' : ''}>Credit (Cr)</option></select></div>
@@ -360,6 +364,7 @@ function render(focus = false) {
   let html;
   switch (page) {
     case 'home': html = homePage(); break;
+    case 'accounts': html = accountReferencePage(accountReference); break;
     case 'fundamentals':
       html = id ? fundamentalsPage(fundamentals, id, modes(), progress.mode === 'new') || notFound() : fundamentalsIndex(fundamentals);
       break;
@@ -380,7 +385,7 @@ function render(focus = false) {
     default: html = notFound();
   }
   main.innerHTML = html;
-  const nav = ['lesson', 'unit'].includes(page) ? 'learn' : ['quiz', 'journal', 'ledger', 'trial', 'exam'].includes(page) ? 'practice' : page;
+  const nav = page === 'accounts' ? 'fundamentals' : ['lesson', 'unit'].includes(page) ? 'learn' : ['quiz', 'journal', 'ledger', 'trial', 'exam'].includes(page) ? 'practice' : page;
   document.querySelectorAll('[data-nav]').forEach(a => {
     a.classList.toggle('active', a.dataset.nav === nav);
     if (a.dataset.nav === nav) a.setAttribute('aria-current', 'page');
@@ -410,6 +415,13 @@ function checkedActivity(correct, message, activity) {
 }
 
 function onClick(event) {
+  const accountSection = event.target.closest('[data-account-section]');
+  if (accountSection) {
+    const section = document.getElementById(`account-group-${accountSection.dataset.accountSection}`);
+    section?.focus({ preventScroll: true });
+    section?.scrollIntoView({ block: 'start' });
+    return;
+  }
   if (event.target.closest('.skip-link')) {
     event.preventDefault();
     main.focus();

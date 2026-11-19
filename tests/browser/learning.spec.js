@@ -261,8 +261,35 @@ test('Fudamentals opens four ordered subpages with working PDF links', async ({p
   await expect(page.getByRole('heading',{name:'That page isn’t here.'})).toBeVisible();
 });
 
+test('account reference covers exercise accounts, explains the narrative and preserves journal work', async ({page,context}) => {
+  await page.goto('./#fundamentals');
+  await page.getByRole('link',{name:'Open the account reference'}).click();
+  await expect(page.getByRole('heading',{name:'Which account do I choose?',exact:true})).toBeVisible();
+  await expect(page.locator('[data-nav="fundamentals"]')).toHaveAttribute('aria-current','page');
+  const config = await read(course.accountReferenceFile);
+  const names = [...config.groups.flatMap(g => g.accounts), ...config.specialAccounts].map(a => a.name);
+  await expect(page.locator('.account-name')).toHaveText(names);
+  expect([...activities.accounts, 'Bank (overdraft)'].every(name => names.includes(name))).toBe(true);
+  await page.getByRole('button',{name:'Liabilities',exact:true}).click();
+  await expect(page.locator('#account-group-liabilities')).toBeFocused();
+  await expect(page.locator('#account-group-liabilities')).toContainText('Accruals');
+  await expect(page.locator('#narrative-example').locator('..')).toContainText('no Bank entry');
+  await page.reload();
+  await expect(page.getByRole('heading',{name:'Which account do I choose?',exact:true})).toBeVisible();
+  await page.goto('./#journal/j-accrual');
+  await page.locator('#account-0').selectOption('Electricity expense');
+  await page.locator('#amount-0').fill('275');
+  const opened = context.waitForEvent('page');
+  await page.getByRole('link',{name:'Which account do I choose? Open the account reference (new tab)'}).click();
+  const reference = await opened;
+  await expect(reference.getByRole('heading',{name:'Which account do I choose?',exact:true})).toBeVisible();
+  await reference.close();
+  await expect(page.locator('#account-0')).toHaveValue('Electricity expense');
+  await expect(page.locator('#amount-0')).toHaveValue('275');
+});
+
 test('mobile layout, keyboard access and WCAG automated checks cover key screens', async ({page}, testInfo) => {
-  for (const hash of ['home','fundamentals','fundamentals/account-types','learn','lesson/prepayments','quiz/equation','journal/j-loan','ledger/l-overdraft','trial/tb-adjusted','exam/ex-timing','progress','guide']) {
+  for (const hash of ['home','accounts','fundamentals','fundamentals/account-types','learn','lesson/prepayments','quiz/equation','journal/j-loan','ledger/l-overdraft','trial/tb-adjusted','exam/ex-timing','progress','guide']) {
     await page.goto(`./#${hash}`);
     await expect(page.locator('h1')).toBeVisible();
     const overflow = await page.evaluate(()=>document.documentElement.scrollWidth > window.innerWidth+1);

@@ -20,6 +20,7 @@ export function orderedPages(config) {
 export function fundamentalsIndex(config) {
   return `<div class="page-head"><div><span class="eyebrow">START WITH THE FOUNDATIONS</span><h1>${e(config.title)}</h1><p>${e(config.description)}</p></div></div>
     <p class="small muted">${e(config.sourceNote)}</p>
+    <section class="card" style="margin-bottom:20px"><h2>Which account do I choose?</h2><p>See the exercise account names grouped under Assets, Capital / Equity, Liabilities, Revenue / Income and Expenses, with clues to recognise them in a transaction.</p><a class="btn secondary" href="#accounts">Open the account reference →</a></section>
     <div class="module-grid">${orderedPages(config).map(page => `<a class="card module-card" href="#fundamentals/${e(page.id)}"><div class="module-number"><span>${page.order}</span><span>FOUNDATION ${page.order}</span></div><h2>${e(page.title)}</h2><p>${e(page.summary)}</p><div class="module-meta"><span>Read, understand, then practise</span><span>Explore →</span></div></a>`).join('')}</div>`;
 }
 
@@ -33,6 +34,7 @@ export function fundamentalsPage(config, id, modeControls, isNew) {
     <p class="small muted">Topic guide for: ${e(page.sourceTitle)}. Original explanations, not a reproduction of the PDF.</p>
     <div class="button-row"><a class="btn secondary" href="${e(page.pdf)}" target="_blank" rel="noopener noreferrer">Open PDF: ${page.order}. ${e(page.title)} ↗</a><span class="small muted">Original attachment · opens in a new tab</span></div>
     ${modeControls}
+    ${id === 'account-types' ? '<a class="btn secondary" href="#accounts">See account names by category →</a>' : ''}
     ${page.sections.map((section, i) => `<section class="lesson-section"><span class="eyebrow">${String(i + 1).padStart(2, '0')}</span><h2>${e(section.title)}</h2><p>${e(section.text)}</p>${isNew ? `<div class="new-explanation"><span class="eyebrow">EXPLAIN LIKE I’M NEW</span>${e(section.new)}</div>` : ''}</section>`).join('')}
     <div class="scroll-table"><table><caption class="small" style="text-align:left;padding-bottom:12px">${e(page.table.caption)}</caption><thead><tr>${page.table.headers.map(header => `<th scope="col">${e(header)}</th>`).join('')}</tr></thead><tbody>${page.table.rows.map(row => `<tr>${row.map(cell => `<td>${e(cell)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>
     <section class="card worked-example"><span class="eyebrow">LET’S WORK IT THROUGH</span><h2>A worked example</h2><p>${e(page.example.prompt)}</p><ol class="steps">${page.example.steps.map(step => `<li>${e(step)}</li>`).join('')}</ol><div class="formula">${e(page.example.result)}</div></section>

@@ -1,0 +1,85 @@
+{
+  "groups": [
+    {
+      "id": "assets",
+      "title": "Assets",
+      "description": "Resources controlled by the business and amounts owed TO it. Assets normally increase with a debit (Dr).",
+      "accounts": [
+        {"name":"Bank","balance":"Dr","meaning":"Money held in the business bank account.","clues":"Cash received, paid into bank, paid from bank. Only use Bank if money actually moves. An overdraft is different: see Liabilities."},
+        {"name":"Trade receivables","balance":"Dr","meaning":"Customers owe the business for goods or services already supplied on credit.","clues":"Sold on credit; customer will pay later. A later receipt reduces this asset, not a second sale."},
+        {"name":"Equipment cost","aliases":["Equipment","Computer equipment","Motor vehicles cost","Motor Vehicles","Vehicles cost"],"balance":"Dr","meaning":"The original cost of long-term equipment or vehicles used by the business.","clues":"Buy a computer, van or equipment for business use, not to resell. Not an immediate running expense."},
+        {"name":"Prepayments","aliases":["Prepaid expenses"],"balance":"Dr","meaning":"A benefit already paid for but not yet used.","clues":"Insurance or rent paid in advance; some months relate to next year. The unused portion is an asset, not this year's expense."},
+        {"name":"Accrued income","balance":"Dr","meaning":"Income already earned but not yet received or recorded.","clues":"Service already performed; interest earned but not received. The business has a right to collect."},
+        {"name":"Loan receivable","balance":"Dr","meaning":"Principal owed to this business because it lent money to someone else.","clues":"The business lends money; another entity repays a loan we made. Different from money WE borrowed."},
+        {"name":"Investment","balance":"Dr","meaning":"Funds invested by the business to earn a return.","clues":"Business buys an investment in another entity. The original investment is an asset; dividend or interest income is separate."},
+        {"name":"Accumulated depreciation","aliases":["Motor Vehicle Accumulated Depreciation"],"balance":"Cr","meaning":"A contra-asset: depreciation charged to date, deducted from the related asset's cost.","clues":"Total depreciation so far; transfer the sold asset's accumulated depreciation. Grouped with assets because it REDUCES their carrying amount. Its normal credit balance does not make it a liability."},
+        {"name":"Inventory","aliases":["Closing inventory"],"balance":"Dr","meaning":"Goods still held, normally at the lower of cost and net realisable value.","clues":"Unsold goods, units on hand, stock left at year-end. Purchases is a different account in this site's periodic system."},
+        {"name":"Raw materials","balance":"Dr","meaning":"Manufacturing inventory not yet used in production.","clues":"Materials held ready to make goods."},
+        {"name":"Work in progress","balance":"Dr","meaning":"Manufacturing inventory that is only partly completed.","clues":"Part-finished goods at year-end."},
+        {"name":"Finished goods","balance":"Dr","meaning":"Completed manufactured goods not yet sold.","clues":"Ready to sell but still held. Raw materials, work in progress and finished goods are components of inventory: do not count them again on top of its total."}
+      ]
+    },
+    {
+      "id": "equity",
+      "title": "Capital / Equity",
+      "description": "The owner's residual interest: assets less liabilities. Contributions increase equity; drawings and distributions reduce it without being expenses.",
+      "accounts": [
+        {"name":"Capital","aliases":["Owner's capital","Capital introduced"],"balance":"Cr","meaning":"Funding contributed by the owner.","clues":"Owner invests savings, starts the business with funds, introduces capital. Not sales revenue and not a repayable loan."},
+        {"name":"Drawings","balance":"Dr","meaning":"A sole trader's withdrawals for personal use; a deduction from equity.","clues":"Owner takes money for personal shopping or living costs. Not wages, rent or another business expense. Drawings increase with a debit because they reduce equity."},
+        {"name":"Dividends (equity distribution)","aliases":["Dividends","Dividends paid"],"balance":"Dr","meaning":"A company distribution to shareholders, reducing equity.","clues":"Company pays a dividend to its owners. Not an expense and not the same as dividend income earned on an investment. If a dividend payable was already recorded, its payment clears that liability instead."},
+        {"name":"Retained earnings","aliases":["Retained profits"],"balance":"Cr","meaning":"Cumulative company profits retained after distributions and other relevant movements.","clues":"Opening retained profit plus this year's profit, less dividends. A loss reduces it; an accumulated deficit can have a debit balance."},
+        {"name":"Ordinary shares","balance":"Cr","meaning":"The nominal amount of ordinary share capital issued by a company.","clues":"A company issues ordinary ownership shares. Share capital is not sales."},
+        {"name":"Share premium","balance":"Cr","meaning":"Amounts subscribed for shares above their nominal value.","clues":"Issue price exceeds nominal value; the excess belongs to equity, not revenue."}
+      ]
+    },
+    {
+      "id": "liabilities",
+      "title": "Liabilities",
+      "description": "Obligations: amounts the business owes, or goods/services it must still provide. Liabilities normally increase with a credit (Cr).",
+      "accounts": [
+        {"name":"Trade payables","aliases":["Payables"],"balance":"Cr","meaning":"Amounts owed to suppliers for goods or services received on credit.","clues":"Buy on credit; supplier invoice outstanding. Paying an existing invoice reduces the payable rather than recording the purchase again."},
+        {"name":"Accruals","aliases":["Expense accruals"],"balance":"Cr","meaning":"Costs already incurred but not yet paid or recorded; in these exercises, often not yet billed.","clues":"Used but not yet billed, paid or recorded; a missing year-end expense. Record the expense AND the obligation. Different from accrued income, which is an asset."},
+        {"name":"Income received in advance","aliases":["Prepaid income","Deferred income"],"balance":"Cr","meaning":"Customer money received before the promised goods or services have been provided.","clues":"Customer pays now for next year; service still owed. It is not revenue yet. Different from a prepaid EXPENSE, which is an asset."},
+        {"name":"Loan payable","aliases":["Loans payable","Long-term loans","Debentures"],"balance":"Cr","meaning":"Borrowed principal the business must repay.","clues":"The business borrows or receives a bank loan. Repaying principal reduces this liability; interest is a separate expense."},
+        {"name":"Warranty provision","balance":"Cr","meaning":"An estimated liability for the cost of meeting warranty obligations.","clues":"Expected claims on goods already sold; claim rate times average repair cost. Payment of a covered claim uses the provision."},
+        {"name":"Deferred grant income","balance":"Cr","meaning":"Grant receipts not yet recognised as income under the deferral model assumed in the exercises.","clues":"Grant covers future costs or several years. Release the matching part to Grant income when the stated conditions are met."},
+        {"name":"Bank (overdraft)","balance":"Cr","meaning":"A negative bank balance: money owed to the bank.","clues":"Payments exceed available funds; the exercise explicitly says overdraft. This is a credit balance in Bank, not a new account to select in the journal builder."}
+      ]
+    },
+    {
+      "id": "revenue",
+      "title": "Revenue / Income",
+      "description": "Amounts earned by the business, increasing profit and hence equity. Income normally increases with a credit (Cr). Cash receipts alone do not prove income was earned.",
+      "accounts": [
+        {"name":"Sales","aliases":["Sales revenue"],"balance":"Cr","meaning":"Revenue from goods or services supplied to customers.","clues":"Sold goods for cash or on credit. A customer settling an old debt is not another sale."},
+        {"name":"Service income","aliases":["Service revenue"],"balance":"Cr","meaning":"Revenue earned by providing a service.","clues":"Work completed, services performed or fees earned. Receiving payment before performance may instead create income in advance."},
+        {"name":"Interest income","aliases":["Interest received","Loan income"],"balance":"Cr","meaning":"The return earned on money lent or deposited.","clues":"Receive or earn interest on a loan made to someone else. The return of the original principal clears Loan receivable instead."},
+        {"name":"Dividend income","aliases":["Dividends received"],"balance":"Cr","meaning":"A return earned on the business's investment in shares.","clues":"The business receives a dividend from another company. Different from a dividend this business pays to its own owners."},
+        {"name":"Grant income","aliases":["Grants received"],"balance":"Cr","meaning":"The portion of a grant recognised as income under the stated exercise assumptions.","clues":"Qualifying costs incurred; release the year's portion of a deferred grant. Check conditions: not every grant cash receipt is immediate income."},
+        {"name":"Gain on disposal","balance":"Cr","meaning":"Proceeds from an asset disposal exceeding its carrying amount.","clues":"Sell a non-current asset for more than its net book value. This is other income/gain, not ordinary trading sales; only the gain affects profit."}
+      ]
+    },
+    {
+      "id": "expenses",
+      "title": "Expenses",
+      "description": "Costs consumed in earning this period's income, reducing profit. Expenses normally increase with a debit (Dr), even if not yet paid.",
+      "accounts": [
+        {"name":"Purchases","balance":"Dr","meaning":"Goods bought for resale under this site's periodic inventory system.","clues":"Buy resale goods, for cash or on credit. Do not use for equipment, rent or every purchase in everyday language. Unsold inventory is removed from cost of sales at year-end."},
+        {"name":"Depreciation expense","aliases":["Depreciation"],"balance":"Dr","meaning":"This period's allocation of a non-current asset's depreciable cost.","clues":"Annual depreciation charge; asset used during the year. Credit Accumulated depreciation, not Bank."},
+        {"name":"Rent expense","aliases":["Rent"],"balance":"Dr","meaning":"Cost of using premises during this period.","clues":"Rent relating to the current year, whether paid or accrued. Unused future rent belongs in Prepayments."},
+        {"name":"Insurance expense","aliases":["Insurance"],"balance":"Dr","meaning":"Insurance cover used during this period.","clues":"Months of cover relating to the current year. Paid but unused cover is a Prepayment."},
+        {"name":"Electricity expense","aliases":["Electricity"],"balance":"Dr","meaning":"Electricity consumed by the business during this period.","clues":"Electricity has been used, including an unbilled year-end estimate. Use Accruals as the other account if unpaid and unrecorded; Bank only if actually paid."},
+        {"name":"Interest expense","aliases":["Interest","Loan interest"],"balance":"Dr","meaning":"The business's cost of borrowing, separate from principal repayment.","clues":"Interest charged on our loan; interest part of an instalment. Not the entire loan repayment."},
+        {"name":"Grants paid expense","aliases":["Grants paid","Donation expense"],"balance":"Dr","meaning":"A straightforward grant or charitable donation paid out with nothing directly in return.","clues":"Business gives a donation, not an owner withdrawing money. Different from Grant income."},
+        {"name":"Warranty expense","aliases":["Warranty expenses"],"balance":"Dr","meaning":"Expected warranty cost recognised for obligations from past sales.","clues":"Recognise or top up an expected warranty provision. A claim covered by an existing provision reduces that provision instead of charging the same expense again."},
+        {"name":"Loss on disposal","balance":"Dr","meaning":"The shortfall when disposal proceeds are below the asset's carrying amount.","clues":"Sell a non-current asset for less than its net book value. Recognise only the loss, not all original cost as a new expense."},
+        {"name":"Cost of sales","aliases":["Cost of goods sold"],"balance":"Dr","meaning":"Cost of the inventory actually sold during the period.","clues":"Opening inventory plus purchases less closing inventory in the simple periodic model. Not the selling price and not all goods bought."},
+        {"name":"Wages expense","aliases":["Wages"],"balance":"Dr","meaning":"Staff wages earned during this period.","clues":"Employee work already done; include unpaid amounts relating to this year."},
+        {"name":"Utilities expense","aliases":["Utilities"],"balance":"Dr","meaning":"A broader running-cost label for services such as electricity, gas and water.","clues":"Utility services consumed. Where the exercise offers the specific Electricity expense account, use that specific name."}
+      ]
+    }
+  ],
+  "specialAccounts": [
+    {"name":"Disposal","aliases":["Disposal account","NCA Disposal Account"],"balance":"Either, then nil","meaning":"A temporary clearing account, not a permanent asset, liability, equity, income or expense account.","clues":"On sale of a non-current asset: collect original cost (Dr), accumulated depreciation (Cr) and proceeds (Cr). A remaining Dr is a loss; a remaining Cr is a gain. Transfer that result to Loss on disposal or Gain on disposal, leaving Disposal at nil."}
+  ]
+}

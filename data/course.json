@@ -8,6 +8,7 @@
   ],
   "activitiesFile": "activities.json",
   "fundamentalsFile": "fundamentals.json",
+  "accountReferenceFile": "account-reference.json",
   "book": {
     "title": "Frank Wood's Business Accounting",
     "edition": "16th edition (2025)",
